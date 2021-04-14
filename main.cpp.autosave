@@ -1,38 +1,24 @@
 //-------------------------------------------------------------------------------------
 //++++++++  Data header +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//********  File:   vgsa_view.h   *****************************************************
+//********  File:   main.cpp   ********************************************************
+//********  Function:   mainfunction (startpoint)   ***********************************
 //********  Author: Christian Grünewald ***********************************************
 //********  Projekt: InGesWoh_VGSA of InGesWoh Projekt ********************************
 //********  Date:   2021-04-14    *****************************************************
-//********  Git:
+//********  Git:    https://github.com/ChrisLinux127/InGesWoh_VGSA  *******************
 //********  Date of last Changes:   2021-04-14  ***************************************
 //********  Last Changes:   Init  *****************************************************
 //********  Current Version: 0.1  *****************************************************
 //-------------------------------------------------------------------------------------
 
-#ifndef VGSA_VIEW_H
-#define VGSA_VIEW_H
+#include "vgsa_view.h"
 
-#include <QMainWindow>
-#include<QSerialPort>   //für Serielle Kommunikation
-#include<QSerialPortInfo>   //Für Infos von Seriellen Kommunikation
-#include<QDebug>    //Für Ausgaben in Debuger
-#include<QtWidgets> //Für Warnungen (QMessageBox
+#include <QApplication>
 
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class VGSA_View; }
-QT_END_NAMESPACE
-
-class VGSA_View : public QMainWindow
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
-
-public:
-    VGSA_View(QWidget *parent = nullptr);
-    ~VGSA_View();
-
-private:
-    Ui::VGSA_View *ui;
-};
-#endif // VGSA_VIEW_H
+    QApplication a(argc, argv);
+    VGSA_View w;
+    w.show();   //s
+    return a.exec();
+}
