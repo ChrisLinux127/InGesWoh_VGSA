@@ -39,6 +39,8 @@ private slots:
 
     void on_btn_trennen_clicked();
 
+    void readSerial();
+
 private:
     Ui::VGSA_View *ui;  //conncetion to Formular.ui to design the gui
     QSerialPort *Controller;    //Serial Connection to Controller (VGSA)
@@ -46,6 +48,5 @@ private:
     static const quint16 s_Controller_Product_ID=24577; //Product ID of VGSA
     QString Controller_Portname;
     bool Is_Controller_available;
-    static int counter;
 };
 #endif // VGSA_VIEW_H

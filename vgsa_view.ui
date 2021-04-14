@@ -76,7 +76,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Verbindungsstatus zum VGSA</string>
     </property>
    </widget>
   </widget>

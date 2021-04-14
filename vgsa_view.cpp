@@ -59,24 +59,27 @@ void VGSA_View::on_btn_verbinden_clicked()
         //Setup of UART
             Controller->setPortName(Controller_Portname);   //Namen zuweisen
             Controller->open(QSerialPort::ReadWrite); //Bidirektionale Kommunikation
-            Controller->setBaudRate(QSerialPort::Baud9600); //9600 Boud
+            Controller->setBaudRate(QSerialPort::Baud38400); //38400 Boud
             Controller->setDataBits(QSerialPort::Data8);    //8 Bits Übertragen
             Controller->setParity(QSerialPort::NoParity); //Kein Paritätsbit
             Controller->setStopBits(QSerialPort::OneStop);  //1 Stopbit
             Controller->setFlowControl(QSerialPort::NoFlowControl);     //??
+        //Conect the read method to readyRead Signal:
+           QObject::connect(Controller,SIGNAL(readyRead()),this, SLOT(readSerial()));
         //Change btn state
             ui->btn_state->setText("Erfolgreich Verbunden..."); //tell user
-            ui->btn_state->setStyleSheet("background-color:green");
+             ui->btn_state->setStyleSheet("color:white; background-color:green");
             ui->btn_verbinden->setEnabled(false); //btn disable, prevent it from being assigned twice
             ui->btn_trennen->setEnabled(true);
-            ui->lst_out->addItem("SYSTEM: CONECTION SUCCESSfUL");
+            ui->lst_out->addItem( "SYSTEM: CONECTION SUCCESSfUL");
     }
     else
     {
         //Fehler ausgeben:
               QMessageBox::warning(this, "Vebindung Fehlgeschlagen!","ESP32 konnte nicht gefunden werden!");
               ui->btn_state->setText("Verbindung zum USM fehlgeschlagen...");
-              ui->btn_state->setStyleSheet("background-color:red");
+              ui->btn_state->setStyleSheet("color:white; background-color:red");
+              ui->lst_out->addItem( "SYSTEM: CONECTION FAILED!");
     }
 }
 
@@ -87,8 +90,13 @@ void VGSA_View::on_btn_trennen_clicked()
        {
            Controller->close();
            ui->btn_state->setText("Verbindung zum USM vom User getrennt...");
-           ui->btn_state->setStyleSheet("background-color:yellow");
+           ui->btn_state->setStyleSheet("background-color:yellow;color:black");
            ui->btn_trennen->setEnabled(false);
            ui->btn_verbinden->setEnabled(true);
        }
+}
+
+void VGSA_View::readSerial()
+{
+    qDebug()<<"Funktioniert";
 }
