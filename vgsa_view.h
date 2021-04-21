@@ -21,6 +21,14 @@
 #include<QDebug>    //Für Ausgaben in Debuger
 #include<QtWidgets> //Für Warnungen (QMessageBox
 
+//defines for CMD Byte in Hex from UART Protokoll:
+#define BROADCAST 0x00
+#define START_VGSA 0x31
+#define STOP_VGSA 0x32
+
+#define GET_RESSULT 0x09
+#define GET_TREND 0x0D
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class VGSA_View; }
@@ -41,6 +49,10 @@ private slots:
 
     void readSerial();
 
+    void on_btn_Start_clicked();
+
+    void on_btn_Stop_clicked();
+
 private:
     Ui::VGSA_View *ui;  //conncetion to Formular.ui to design the gui
     QSerialPort *Controller;    //Serial Connection to Controller (VGSA)
@@ -48,5 +60,10 @@ private:
     static const quint16 s_Controller_Product_ID=24577; //Product ID of VGSA
     QString Controller_Portname;
     bool Is_Controller_available;
+    QByteArray SerialInputBuffer;   //Input buffer of VGSA
+    uint8_t Messwerte[48];  //48 Messwerte, von 0 bis 254, wobei 127 = Nullevel (luft)
+    uint8_t Header[4];  //Dataheader of Inputbytes
+    uint8_t Trend;  //Aktueller Trend der Werte
+    void ProcessSerialData(QString data);   //Methode um daten zu bekommen
 };
 #endif // VGSA_VIEW_H
